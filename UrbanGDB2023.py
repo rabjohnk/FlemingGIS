@@ -85,7 +85,7 @@ try:
                 "Ailanthus_altissima": "Ailanthus altissima", \
                 "Alnus_glutinosa": "Alnus glutinosa", \
                 "Alnus_rugosa": "Alnus rugosa", \
-                 "Amelanchier": "Amelanchier", \
+                "Amelanchier": "Amelanchier", \
                 "Betula_alleghaniensis": "Betula alleghaniensis", \
                 "Betula_nigra": "Betula nigra", \
                 "Betula_papyrifera": "Betula papyrifera", \
