@@ -1,4 +1,4 @@
 project = QgsProject.instance()
 
 
-project.read("C:\\Users\\Gordon Luckett\\Desktop\\Exercise Files\\2 Managing Layers and Projects with Python\\streetlight_map.qgz")
+project.read("H:\\FlemingGIS\\python_QGIS\\streetlight_map.qgz")
