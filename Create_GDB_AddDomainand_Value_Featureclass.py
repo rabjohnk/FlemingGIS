@@ -12,9 +12,9 @@ import arcpy
 import time
 
 # Set local variables
-out_folder_path = "C:\scripts\FlemingGIS\Greenspace" 
-out_path = "C:\scripts\FlemingGIS\Greenspace"
-out_dataset_path = "C:\scripts\FlemingGIS\Greenspace\Treeinventory23.gdb"
+out_folder_path = "H:\FlemingGIS\Forestry" 
+out_path = "H:\FlemingGIS\Forestry"
+out_dataset_path = "H:\FlemingGIS\Forestry\Treeinventory23.gdb"
 gdb = "Treeinventory23.gdb"
 out_Feature_name = "Trees"
 geometry_type = "POINT"
@@ -27,7 +27,7 @@ domName3 = "Condition"
 domName4 = "GrowSpace"
 domName5 = "Maintanence"
 domName6 = "Notes"
-inFeatures = "C:\scripts\FlemingGIS\Greenspace\Treeinventory23.gdb\Trees"
+inFeatures = "H:\FlemingGIS\Forestry\Treeinventory23.gdb\Trees"
 Field_Name = "Student_Name"
 Field_Name01 = "Group_ID"
 Field_Name1 = "Scientific_N"
@@ -50,7 +50,7 @@ sr = arcpy.SpatialReference(3857)
 
 
 # Set the workspace (to avoid having to type in the full path to the data        every time)
-arcpy.env.workspace = "C:\scripts\FlemingGIS\Greenspace"
+arcpy.env.workspace = "H:\FlemingGIS\Forestry"
      
   # Execute CreateFeatureclass
 
@@ -195,7 +195,7 @@ domDict = {"Abies_concolor": "Abies concolor", \
                 "Rhamnus_cathartica": "Rhamnus cathartica", \
                 "Rhus_typhina": "Rhus typhina", \
                 "Robinia_pseudoacacia": "Robinia pseudoacacia", \
-                "Salix_alba_‘Tristis’": "Salix alba ‘Tristis’", \
+                "Salix_alba_Tristis": "Salix alba Tristis", \
                 "Sambucus_pubens": "Sambucus pubens", \
                 "Sassafras_albidum": "Sassafras albidum", \
                 "Sorbus_aucuparia": "Sorbus aucuparia", \
@@ -273,7 +273,23 @@ domDict2 = {"02": "02", \
                 "84": "84", \
                 "86": "86", \
                 "88": "88", \
-                "90": "90", }
+                "90": "90", \
+                "92": "92", \
+                "94": "94", \
+                "96": "96", \
+                "98": "98", \
+                "100": "100", \
+                "102": "102", \
+                "104": "104", \
+                "106": "106", \
+                "108": "108", \
+                "110": "110", \
+                "112": "112", \
+                "114": "114", \
+                "116": "116", \
+                "118": "118", \
+                "120": "120", \
+                "122": "122", }
     
 for code in domDict2:
         arcpy.AddCodedValueToDomain_management(gdb, domName2, code, domDict2[code])   
