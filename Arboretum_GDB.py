@@ -13,7 +13,7 @@ import time
 
 # Set local variables
 out_folder_path = "H:/Data" 
-out_name = "Arboretum.gdb"
+out_name = "Arboretum1.gdb"
 FeatureName = "Trees_Shrubs"
 # Creating a spatial reference object nad 83 utm zone 17 n
 

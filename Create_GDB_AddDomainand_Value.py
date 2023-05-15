@@ -12,8 +12,8 @@ import arcpy
 import time
 
 # Set local variables
-out_folder_path = "H:/Data/Greenspace" 
-out_name = "Greenspace2.gdb"
+out_folder_path = "H:/Data/summer" 
+out_name = "GreenspaceTest.gdb"
 FeatureName = "Trees"
 # Creating a spatial reference object nad 83 utm zone 17 n
 
@@ -27,7 +27,7 @@ sr = arcpy.SpatialReference(26917)
 
 try:
 # Set the workspace (to avoid having to type in the full path to the data        every time)
-    arcpy.env.workspace = "h:/data/Greenspace"
+    arcpy.env.workspace = "h:/data/summer"
      
         
     
