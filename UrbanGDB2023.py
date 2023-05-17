@@ -12,8 +12,8 @@ import arcpy
 import time
 
 # Set local variables
-out_folder_path = "H:/Data/Greenspace" 
-out_name = "Greenspace2.gdb"
+out_folder_path = "H:/Data/Urban23" 
+out_name = "UrbanTreeInv23.gdb"
 FeatureName = "Trees"
 # Creating a spatial reference object nad 83 utm zone 17 n
 
@@ -25,49 +25,55 @@ time.sleep(20)
 
 sr = arcpy.SpatialReference(26917)
 
-try:
+
 # Set the workspace (to avoid having to type in the full path to the data        every time)
-    arcpy.env.workspace = "h:/data/Greenspace"
+arcpy.env.workspace = "h:/Data/Urban23"
      
         
     
 # Set local parameters
-    domName = "Scientific_N"
-    domName2 = "DBH"
-    domName3 = "Condition"
-    domName4 = "GrowSpace"
-    domName5 = "Maintanence"
-    domName6 = "Notes"
-    gdb = "Greenspace.gdb"
-    inFeatures = "Arboretum1.gdb/Trees_Shrubs"
-    Field_Name = "Scientific_N"
-    Field_Name2 = "DBH"
-    Field_Name3 = "Condition"
-    Field_Name4 = "GrowSpace"
+domName = "Tree_Name"
+domDBH = "DBH"
+domCondition = "Condition"
+domGrowspace = "GrowSpace"
+domMaintenance = "Maintenance"
+domNotes = "Notes"
+gdb = "Greenspace.gdb"
+inFeatures = "UrbanTreeInv23.gdb/Trees"
+field_length = 30
+Field_Name_Length = 75
+Notes_Length = 75
+Field_Name = "Tree_Name"
+Field_DBH = "DBH"
+Field_Condition = "Condition"
+Field_GrowSpace = "GrowSpace"
+Field_Maintenance = "Maintenance"
+Field_Notes = "Notes"
     #inFeatures = "Montgomery.gdb/Water/Distribmains"
     #inField = "Material"
      
 
 # Process: Create the coded value domain
-    arcpy.CreateDomain_management(gdb, domName, "Scientific Name","TEXT", "CODED") 
+arcpy.CreateDomain_management(gdb, domName, "Scientific_Name","TEXT", "CODED") 
     
-    arcpy.CreateDomain_management(gdb, domName2, "DBH","TEXT", "CODED")   
+#arcpy.CreateDomain_management(gdb, domDBH, "DBH","TEXT", "CODED")   
     
-    arcpy.CreateDomain_management(gdb, domName3, "Condition","TEXT", "CODED")    
+arcpy.CreateDomain_management(gdb, domCondition, "Condition","TEXT", "CODED")    
     
-    arcpy.CreateDomain_management(gdb, domName4, "GrowSpace","TEXT", "CODED") 
+arcpy.CreateDomain_management(gdb, domGrowspace, "GrowSpace","TEXT", "CODED") 
     
-    arcpy.CreateDomain_management(gdb, domName5, "Maintanence","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domMaintenance, "Maintenance","TEXT", "CODED")
     
-    arcpy.CreateDomain_management(gdb, domName6, "Notes","TEXT", "CODED")
+    #arcpy.CreateDomain_management(gdb, domNotes, "Notes","TEXT", "CODED")
    
-    time.sleep(10)
+    #time.sleep(10)
 # Process: Create the coded value domain
 #arcpy.CreateDomain_management("UPDM.gdb", domName, "Gas Systems", "TEXT", "CODED")
 
 # Store all the domain values in a dictionary with the domain code as the  "key" and the
 # domain description as the "value" (domDict[code])
-    domDict = {"Abies_concolor": "Abies concolor", \
+
+domDict = {"Abies_concolor": "Abies concolor", \
                 "Acer_ginnala": "Acer ginnala", \
                 "Acer_negundo": "Acer negundo", \
                 "Acer_nigrum": "Acer nigrum", \
@@ -199,80 +205,80 @@ try:
                 "Zelkova_serrata": "Zelkova serrata", }
 
                 
-    for code in domDict:
+for code in domDict:
         arcpy.AddCodedValueToDomain_management(gdb, domName, code, domDict[code])
         
         arcpy.SortCodedValueDomain_management(gdb, domName, "CODE", "ASCENDING")
         
 
-    domDict2 = {"02": "02", \
-                "04": "04", \
-                "06": "06", \
-                "08": "08", \
-                "10": "10", \
-                "12": "12", \
-                "14": "14", \
-                "16": "16", \
-                "18": "18", \
-                "20": "20", \
-                "22": "22", \
-                "24": "24", \
-                "26": "26", \
-                "28": "28", \
-                "30": "30", \
-                "32": "32", \
-                "34": "34", \
-                "36": "36", \
-                "38": "38", \
-                "40": "40", \
-                "42": "42", \
-                "44": "44", \
-                "46": "46", \
-                "48": "48", \
-                "50": "50", \
-                "52": "52", \
-                "54": "54", \
-                "56": "56", \
-                "58": "58", \
-                "60": "60", \
-                "62": "62", \
-                "64": "64", \
-                "66": "66", \
-                "68": "68", \
-                "70": "70", \
-                "72": "72", \
-                "74": "74", \
-                "76": "76", \
-                "78": "78", \
-                "80": "80", \
-                "82": "82", \
-                "84": "84", \
-                "86": "86", \
-                "88": "88", \
-                "90": "90", \
-                "92": "92", \
-                "94": "94", \
-                "96": "96", \
-                "98": "98", \
-                "100": "100", \
-                "102": "102", \
-                "104": "104", \
-                "106": "106", \
-                "108": "108", \
-                "110": "110", \
-                "112": "112", \
-                "114": "114", \
-                "116": "116", \
-                "118": "118", \
-                "120": "120", }
+# domDict2 = {"02": "02", \
+#                 "04": "04", \
+#                 "06": "06", \
+#                 "08": "08", \
+#                 "10": "10", \
+#                 "12": "12", \
+#                 "14": "14", \
+#                 "16": "16", \
+#                 "18": "18", \
+#                 "20": "20", \
+#                 "22": "22", \
+#                 "24": "24", \
+#                 "26": "26", \
+#                 "28": "28", \
+#                 "30": "30", \
+#                 "32": "32", \
+#                 "34": "34", \
+#                 "36": "36", \
+#                 "38": "38", \
+#                 "40": "40", \
+#                 "42": "42", \
+#                 "44": "44", \
+#                 "46": "46", \
+#                 "48": "48", \
+#                 "50": "50", \
+#                 "52": "52", \
+#                 "54": "54", \
+#                 "56": "56", \
+#                 "58": "58", \
+#                 "60": "60", \
+#                 "62": "62", \
+#                 "64": "64", \
+#                 "66": "66", \
+#                 "68": "68", \
+#                 "70": "70", \
+#                 "72": "72", \
+#                 "74": "74", \
+#                 "76": "76", \
+#                 "78": "78", \
+#                 "80": "80", \
+#                 "82": "82", \
+#                 "84": "84", \
+#                 "86": "86", \
+#                 "88": "88", \
+#                 "90": "90", \
+#                 "92": "92", \
+#                 "94": "94", \
+#                 "96": "96", \
+#                 "98": "98", \
+#                 "100": "100", \
+#                 "102": "102", \
+#                 "104": "104", \
+#                 "106": "106", \
+#                 "108": "108", \
+#                 "110": "110", \
+#                 "112": "112", \
+#                 "114": "114", \
+#                 "116": "116", \
+#                 "118": "118", \
+#                 "120": "120", }
     
-    for code in domDict2:
-        arcpy.AddCodedValueToDomain_management(gdb, domName2, code, domDict2[code])   
+# for code in domDict2:
+#         arcpy.AddCodedValueToDomain_management(gdb, domDBH, code, domDict2[code])   
 
-        arcpy.SortCodedValueDomain_management(gdb, domName2, "CODE", "ASCENDING")            
+#         arcpy.SortCodedValueDomain_management(gdb, domDBH, "CODE", "ASCENDING")            
                         
                 
-    domDict3 = {"a_Excellent": "Excellent", \
+domDictCondition = {"a_Excellent": "Excellent", \
                 "b_Good": "Good", \
                 "c_Fair": "Fair", \
                 "d_Poor": "Poor", \
@@ -280,24 +286,24 @@ try:
                 "f_Stump": "Stump", }
 
                 
-    for code in domDict3:
-        arcpy.AddCodedValueToDomain_management(gdb, domName3, code, domDict3[code])
+for code in domDictCondition:
+        arcpy.AddCodedValueToDomain_management(gdb, domCondition, code, domDictCondition[code])
         
-        arcpy.SortCodedValueDomain_management(gdb, domName3, "CODE", "ASCENDING")
+        arcpy.SortCodedValueDomain_management(gdb, domCondition, "CODE", "ASCENDING")
                             
-    domDict4 = {"a_Open": "Open", \
+domDictGrowSpace = {"a_Open": "Open", \
                 "b_Root_Damage": "Root Damage Suspected", \
                 "c_Roots_Confined": "Roots Confined", }
   
-    for code in domDict4:
+for code in domDictGrowSpace:
         
-        arcpy.AddCodedValueToDomain_management(gdb, domName4, code, domDict4[code])
+        arcpy.AddCodedValueToDomain_management(gdb, domGrowspace, code, domDictGrowSpace[code])
         
-        arcpy.SortCodedValueDomain_management(gdb, domName4, "CODE", "ASCENDING")
+        arcpy.SortCodedValueDomain_management(gdb, domGrowspace, "CODE", "ASCENDING")
    
 
 
-    domDict5 = {"a_Nothing": "Nothing", \
+domDictMaintenance = {"a_Nothing": "Nothing", \
                 "b_Crown_Clean": "Crown Clean", \
                 "c_Elevation_Prune": "Elevation Prune", \
                 "d_Juvenile_Prune": "Juvenile Prune", \
@@ -306,17 +312,36 @@ try:
                 "g_Grind_Stump": "Grind Stump", \
                 "h_Plant": "Plant", }
   
-    for code in domDict5:
+for code in domDictMaintenance:
         
-        arcpy.AddCodedValueToDomain_management(gdb, domName5, code, domDict5[code])
+        arcpy.AddCodedValueToDomain_management(gdb, domMaintenance, code, domDictMaintenance[code])
         
-        arcpy.SortCodedValueDomain_management(gdb, domName5, "CODE", "ASCENDING")
+        arcpy.SortCodedValueDomain_management(gdb, domMaintenance, "CODE", "ASCENDING")
+
+
+
+arcpy.AddField_management(inFeatures, Field_Name, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, Field_DBH, "FLOAT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, Field_Condition, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, Field_GrowSpace, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, Field_Maintenance, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, Field_Notes, "TEXT", field_length=Notes_Length,)
+
+#time.sleep(5)
+
+#assign domain to field 
+
+arcpy.AssignDomainToField_management(inFeatures, Field_Name, domName)
+#arcpy.AssignDomainToField_management(inFeatures, Field_DBH, domDBH)
+arcpy.AssignDomainToField_management(inFeatures, Field_Condition, domCondition)
+arcpy.AssignDomainToField_management(inFeatures, Field_GrowSpace, domGrowspace)
+arcpy.AssignDomainToField_management(inFeatures, Field_Maintenance, domMaintenance)
+
+arcpy.EnableAttachments_management(inFeatures)      
                           
-# Process: Add valid material types to the domain
-# use a for loop to cycle through all the domain codes in the dictionary
+
     
    
 
 
-except Exception as err:
-            print(err.args[0])
+

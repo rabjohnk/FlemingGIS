@@ -7,16 +7,16 @@ import arcpy
 import time
 
 # Set local variables
-out_folder_path = "H:\FlemingGIS\Forestry" 
-out_path = "H:\FlemingGIS\Forestry"
-out_dataset_path = "H:\FlemingGIS\Forestry\Treeinventory2023b.gdb"
-gdb = "Treeinventory2023b.gdb"
+out_folder_path = "H:\data\Forestry23\\data" 
+out_path = "H:\data\Forestry23\\data"
+out_dataset_path = "H:\data\Forestry23\\data\Treeinventory2023a.gdb"
+gdb = "Treeinventory2023a.gdb"
 out_Feature_name = "Trees"
 geometry_type = "POINT"
 template = "DISABLED"
 #domName = "Student_Name"
-#domNameTreeNum = "Tree_Number"
-domTreeName = "Scientific_N"
+domNTreeNum = "Tree_Number"
+domTreeName = "Tree_Name"
 domNameArb = "Arboretum_Tag"
 domNameBark = "Bark_Stage"
 domNameCondition = "Condition"
@@ -26,8 +26,21 @@ domNameGrowing = "Growing_Stock"
 domNameMajor1 = "Major_Defect1"
 domNameMajor2 = "Major_Defect2"
 domNameMajor3 = "Major_Defect3"
+domMod1 = "Moderate_Defect1"
+domMod2 = "Moderate_Defect2"
+domMod3 = "Moderate_Defect3"
+domMin1 = "Minor_Defect1"
+domMin2 = "Minor_Defect2"
+domMin3 = "Minor_Defect3"
+domPatho1 = "Other_Pathagens1"
+domPatho2 = "Other_Pathagens2"
+domPatho3 = "Other_Pathagens3"
+domWork1 = "Work1"
+domWork2 = "Work2"
+domWork3 = "Work3"
+domNotes = "Notes"
 
-inFeatures = "H:\FlemingGIS\Forestry\Treeinventory2023b.gdb\Trees"
+inFeatures = "H:\data\Forestry23\\data\Treeinventory2023a.gdb\Trees"
 #Field_Name = "Student_Name"
 Field_Tree = "Tree_Number"
 Field_DBH = "DBH"
@@ -42,12 +55,22 @@ Field_Growing = "Growing_Stock"
 FieldMajor1 = "Major_Defect1"
 FieldMajor2 = "Major_Defect2"
 FieldMajor3 = "Major_Defect3"
-
-
-#Field_Name6 = "Notes"
+FieldMod1 = "Moderate_Defect1"
+FieldMod2 = "Moderate_Defect2"
+FieldMod3 = "Moderate_Defect3"
+FieldMin1 = "Minor_Defect1"
+FieldMin2 = "Minor_Defect2"
+FieldMin3 = "Minor_Defect3"
+FieldPatho1 = "Other_Pathagens1"
+FieldPatho2 = "Other_Pathagens2"
+FieldPatho3 = "Other_Pathagens3"
+FieldWork1 = "Work1"
+FieldWork2 = "Work2"
+FieldWork3 = "Work3"
+Field_Notes = "Notes"
 field_length = 30
-Field_Name_Length = 75
-Notes_Length = 75
+Field_Name_Length = 125
+Notes_Length = 125
     
 
 
@@ -60,7 +83,7 @@ sr = arcpy.SpatialReference(3857)
 
 
 # Set the workspace (to avoid having to type in the full path to the data        every time)
-arcpy.env.workspace = "H:\FlemingGIS\Forestry"
+arcpy.env.workspace = "H:\data\Forestry23\\data"
      
   # Execute CreateFeatureclass
 
@@ -72,25 +95,39 @@ arcpy.CreateFeatureclass_management(out_dataset_path, out_Feature_name, geometry
 
 # Process: Create the coded value domain
 
-arcpy.management.CreateDomain(gdb, domTreeName, "Scientific_N", "TEXT", "CODED") 
+arcpy.CreateDomain_management(gdb, domTreeName, "Tree_Name", "TEXT", "CODED") 
 
-arcpy.management.CreateDomain(gdb, domNameArb, "Arboretum_Tag","TEXT", "CODED")   
+arcpy.CreateDomain_management(gdb, domNameArb, "Arboretum_Tag","TEXT", "CODED")   
         
-arcpy.management.CreateDomain(gdb, domNameBark, "Bark_Stage","TEXT", "CODED")    
+arcpy.CreateDomain_management(gdb, domNameBark, "Bark_Stage","TEXT", "CODED")    
         
-arcpy.management.CreateDomain(gdb, domNameCondition, "Condition","TEXT", "CODED") 
+arcpy.CreateDomain_management(gdb, domNameCondition, "Condition","TEXT", "CODED") 
         
-arcpy.management.CreateDomain(gdb, domnameCavity, "Cavity","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domnameCavity, "Cavity","TEXT", "CODED")
 
-arcpy.management.CreateDomain(gdb, domNameMast, "Mast","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domNameMast, "Mast","TEXT", "CODED")
 
-arcpy.management.CreateDomain(gdb, domNameGrowing, "Growing_Stock","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domNameGrowing, "Growing_Stock","TEXT", "CODED")
 
-arcpy.management.CreateDomain(gdb, domNameMajor1, "Major_Defect1","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domNameMajor1, "Major_Defect1","TEXT", "CODED")
 
-arcpy.management.CreateDomain(gdb, domNameMajor2, "Major_Defect2","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domNameMajor2, "Major_Defect2","TEXT", "CODED")
 
-arcpy.management.CreateDomain(gdb, domNameMajor3, "Major_Defect3","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domNameMajor3, "Major_Defect3","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domMod1, "Moderate_Defect1","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domMod2, "Moderate_Defect2","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domMod3, "Moderate_Defect3","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domMin1, "Minor_Defect1","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domMin2, "Minor_Defect2","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domMin3, "Minor_Defect3","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domPatho1, "Other_Pathagens1","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domPatho2, "Other_Pathagens2","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domPatho3, "Other_Pathagens3","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domWork1, "Work1","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domWork2, "Work2","TEXT", "CODED")
+arcpy.CreateDomain_management(gdb, domWork3, "Work3","TEXT", "CODED")
+
+
     
 #arcpy.CreateDomain_management(gdb, domName6, "Notes","TEXT")
    
@@ -420,15 +457,240 @@ for code in domDictMajor3:
         
         arcpy.SortCodedValueDomain_management(gdb, domNameMajor3, "CODE", "ASCENDING") 
 
+domDictMod1 = {"Black_Knot": "Black Knot",\
+                "Frost_Crack": "Frost Crack",\
+                "Lean_10": "Lean > 10%",\
+                "Mossy_Top": "Mossy Top Fungus",\
+                "Small_Dark-faced": "Small Dark-faced Scar",\
+                "Spiral_seam": "Spiral seam",\
+                "Sugar_Maple_ Dark-faced": "Sugar Maple Borer - Dark-faced, large",\
+                "Sugar_Maple_White-faced": "Sugar Maple Borer - White-faced, small",\
+                "Sunscald": "Sunscald",}               
+
+for code in domDictMod1:
+        
+        arcpy.AddCodedValueToDomain_management(gdb, domMod1, code, domDictMod1[code])
+        
+        arcpy.SortCodedValueDomain_management(gdb, domMod1, "CODE", "ASCENDING") 
+
+domDictMod2 = {"Black_Knot": "Black Knot",\
+                "Frost_Crack": "Frost Crack",\
+                "Lean_10": "Lean > 10%",\
+                "Mossy_Top": "Mossy Top Fungus",\
+                "Small_Dark-faced": "Small Dark-faced Scar",\
+                "Spiral_seam": "Spiral seam",\
+                "Sugar_Maple_ Dark-faced": "Sugar Maple Borer - Dark-faced, large",\
+                "Sugar_Maple_White-faced": "Sugar Maple Borer - White-faced, small",\
+                "Sunscald": "Sunscald",}                 
+
+for code in domDictMod2:
+        
+        arcpy.AddCodedValueToDomain_management(gdb, domMod2, code, domDictMod2[code])
+        
+        arcpy.SortCodedValueDomain_management(gdb, domMod2, "CODE", "ASCENDING") 
+
+domDictMod3 = {"Black_Knot": "Black Knot",\
+                "Frost_Crack": "Frost Crack",\
+                "Lean_10": "Lean > 10%",\
+                "Mossy_Top": "Mossy Top Fungus",\
+                "Small_Dark-faced": "Small Dark-faced Scar",\
+                "Spiral_seam": "Spiral seam",\
+                "Sugar_Maple_ Dark-faced": "Sugar Maple Borer - Dark-faced, large",\
+                "Sugar_Maple_White-faced": "Sugar Maple Borer - White-faced, small",\
+                "Sunscald": "Sunscald",}
+
+                 
+
+for code in domDictMod3:
+        
+        arcpy.AddCodedValueToDomain_management(gdb, domMod3, code, domDictMod3[code])
+        
+        arcpy.SortCodedValueDomain_management(gdb, domMod3, "CODE", "ASCENDING") 
+
+
+domDictMin1 = {"Burl_": "Burl",\
+                "Crook_and": "Crook and Sweep",\
+                "Epicormic_Branching": "Epicormic Branching",\
+                "White-faced_scar": "White-faced scar",}         
+
+for code in domDictMin1:
+        
+        arcpy.AddCodedValueToDomain_management(gdb, domMin1, code, domDictMin1[code])
+        
+        arcpy.SortCodedValueDomain_management(gdb, domMin1, "CODE", "ASCENDING") 
+
+domDictMin2 = {"Burl_": "Burl",\
+                "Crook_and": "Crook and Sweep",\
+                "Epicormic_Branching": "Epicormic Branching",\
+                "White-faced_scar": "White-faced scar",}         
+
+for code in domDictMin2:
+        
+        arcpy.AddCodedValueToDomain_management(gdb, domMin2, code, domDictMin2[code])
+        
+        arcpy.SortCodedValueDomain_management(gdb, domMin2, "CODE", "ASCENDING") 
+
+domDictMin3 = {"Burl_": "Burl",\
+                "Crook_and": "Crook and Sweep",\
+                "Epicormic_Branching": "Epicormic Branching",\
+                "White-faced_scar": "White-faced scar",}         
+
+for code in domDictMin3:
+        
+        arcpy.AddCodedValueToDomain_management(gdb, domMin3, code, domDictMin3[code])
+        
+        arcpy.SortCodedValueDomain_management(gdb, domMin3, "CODE", "ASCENDING") 
+
+domDictPath1 = {"Adelgid_":"Adelgid",\
+                "Animal_Damage,": "Animal Damage, porcupine",\
+                "Animal_Damage,": "Animal Damage, rodent",\
+                "Borer,_Bronze": "Borer, Bronze Birch",\
+                "Borer,_Emerald": "Borer, Emerald Ash",\
+                "Borer,_Sugar": "Borer, Sugar Maple",\
+                "Compaction_": "Compaction",\
+                "DED_": "DED",\
+                "Dieback_>": "Dieback > 25%",\
+                "Diplodia_": "Diplodia",\
+                "Eastern_Tent": "Eastern Tent",\
+                "Fall_Webworm": "Fall Webworm",\
+                "Frost_Crack": "Frost Crack",\
+                "Gall,_spindle/bladder": "Gall, spindle/bladder",\
+                "Girdling_Root": "Girdling Root Suspected",\
+                "Hypoxylon_": "Hypoxylon",\
+                "Inclusion_": "Inclusion",\
+                "Mechanical_Damage": "Mechanical Damage",\
+                "Needlecast_": "Needlecast",\
+                "Skeletonizer_": "Skeletonizer",\
+                "Sooty_Mould": "Sooty Mould",\
+                "Split_Gill": "Split Gill ",\
+                "Spongy_Moth": "Spongy Moth",\
+                "Tar_Spot": "Tar Spot",\
+                "Thyronectria_": "Thyronectria",\
+                "Tinder_Polypore": "Tinder Polypore",\
+                "Witches'_Broom": "Witches' Broom",}         
+
+for code in domDictPath1:
+        
+        arcpy.AddCodedValueToDomain_management(gdb, domPatho1, code, domDictPath1[code])
+        
+        arcpy.SortCodedValueDomain_management(gdb, domPatho1, "CODE", "ASCENDING") 
+
+domDictPath2 = {"Adelgid_": "Adelgid",\
+                "Animal_Damage,": "Animal Damage, porcupine",\
+                "Animal_Damage,": "Animal Damage, rodent",\
+                "Borer,_Bronze": "Borer, Bronze Birch",\
+                "Borer,_Emerald": "Borer, Emerald Ash",\
+                "Borer,_Sugar": "Borer, Sugar Maple",\
+                "Compaction_": "Compaction",\
+                "DED_": "DED",\
+                "Dieback_>": "Dieback > 25%",\
+                "Diplodia_": "Diplodia",\
+                "Eastern_Tent": "Eastern Tent",\
+                "Fall_Webworm": "Fall Webworm",\
+                "Frost_Crack": "Frost Crack",\
+                "Gall,_spindle/bladder": "Gall, spindle/bladder",\
+                "Girdling_Root": "Girdling Root Suspected",\
+                "Hypoxylon_": "Hypoxylon",\
+                "Inclusion_": "Inclusion",\
+                "Mechanical_Damage": "Mechanical Damage",\
+                "Needlecast_": "Needlecast",\
+                "Skeletonizer_": "Skeletonizer",\
+                "Sooty_Mould": "Sooty Mould",\
+                "Split_Gill": "Split Gill ",\
+                "Spongy_Moth": "Spongy Moth",\
+                "Tar_Spot": "Tar Spot",\
+                "Thyronectria_": "Thyronectria",\
+                "Tinder_Polypore": "Tinder Polypore",\
+                "Witches'_Broom": "Witches' Broom",}         
+
+for code in domDictPath2:
+        
+        arcpy.AddCodedValueToDomain_management(gdb, domPatho2, code, domDictPath2[code])
+        
+        arcpy.SortCodedValueDomain_management(gdb, domPatho2, "CODE", "ASCENDING") 
+
+domDictPath3 = {"Adelgid_": "Adelgid",\
+                "Animal_Damage,": "Animal Damage, porcupine",\
+                "Animal_Damage,": "Animal Damage, rodent",\
+                "Borer,_Bronze": "Borer, Bronze Birch",\
+                "Borer,_Emerald": "Borer, Emerald Ash",\
+                "Borer,_Sugar": "Borer, Sugar Maple",\
+                "Compaction_": "Compaction",\
+                "DED_": "DED",\
+                "Dieback_>": "Dieback > 25%",\
+                "Diplodia_": "Diplodia",\
+                "Eastern_Tent": "Eastern Tent",\
+                "Fall_Webworm": "Fall Webworm",\
+                "Frost_Crack": "Frost Crack",\
+                "Gall,_spindle/bladder": "Gall, spindle/bladder",\
+                "Girdling_Root": "Girdling Root Suspected",\
+                "Hypoxylon_": "Hypoxylon",\
+                "Inclusion_": "Inclusion",\
+                "Mechanical_Damage": "Mechanical Damage",\
+                "Needlecast_": "Needlecast",\
+                "Skeletonizer_": "Skeletonizer",\
+                "Sooty_Mould": "Sooty Mould",\
+                "Split_Gill": "Split Gill ",\
+                "Spongy_Moth": "Spongy Moth",\
+                "Tar_Spot": "Tar Spot",\
+                "Thyronectria_": "Thyronectria",\
+                "Tinder_Polypore": "Tinder Polypore",\
+                "Witches'_Broom": "Witches' Broom",}         
+
+for code in domDictPath3:
+        
+        arcpy.AddCodedValueToDomain_management(gdb, domPatho3, code, domDictPath3[code])
+        
+        arcpy.SortCodedValueDomain_management(gdb, domPatho3, "CODE", "ASCENDING")  
+
+domDictwork1 = {"PHC,_Air": "PHC, Air Spade",\
+                "PHC,_Inject": "PHC, Inject",\
+                "Prune_": "Prune",\
+                "Release_": "Release",\
+                "Remove_": "Remove",\
+                "Stump_Grind": "Stump Grind",}
+
+for code in domDictwork1:
+        
+        arcpy.AddCodedValueToDomain_management(gdb, domWork1, code, domDictwork1[code])
+        
+        arcpy.SortCodedValueDomain_management(gdb, domWork1, "CODE", "ASCENDING")  
+
+domDictwork2 = {"PHC,_Air": "PHC, Air Spade",\
+                "PHC,_Inject": "PHC, Inject",\
+                "Prune_": "Prune",\
+                "Release_": "Release",\
+                "Remove_": "Remove",\
+                "Stump_Grind": "Stump Grind",}
+
+for code in domDictwork2:
+        
+        arcpy.AddCodedValueToDomain_management(gdb, domWork2, code, domDictwork2[code])
+        
+        arcpy.SortCodedValueDomain_management(gdb, domWork2, "CODE", "ASCENDING")     
+
+domDictwork3 = {"PHC,_Air": "PHC, Air Spade",\
+                "PHC,_Inject": "PHC, Inject",\
+                "Prune_": "Prune",\
+                "Release_": "Release",\
+                "Remove_": "Remove",\
+                "Stump_Grind": "Stump Grind",}
+
+for code in domDictwork3:
+        
+        arcpy.AddCodedValueToDomain_management(gdb, domWork3, code, domDictwork3[code])
+        
+        arcpy.SortCodedValueDomain_management(gdb, domWork3, "CODE", "ASCENDING")                             
 
 # Process: Add valid material types to the domain
 # use a for loop to cycle through all the domain codes in the dictionary
-#time.sleep(5)
+time.sleep(5)
 
 #Add Fields to Feature Class
 arcpy.AddField_management(inFeatures, Field_Tree, "LONG", field_length=field_length,)
 arcpy.AddField_management(inFeatures, Field_TreeName, "TEXT", field_length=Field_Name_Length,)
-arcpy.AddField_management(inFeatures, Field_NameSpec, "TEXT", field_length=field_length,)                       
+arcpy.AddField_management(inFeatures, Field_NameSpec, "TEXT", field_length=Field_Name_Length,) 
+arcpy.AddField_management(inFeatures, Field_DBH, "FLOAT", field_length=field_length,)                      
 arcpy.AddField_management(inFeatures, Field_Arb, "TEXT", field_length=field_length,)  
 arcpy.AddField_management(inFeatures, Field_Bark, "TEXT", field_length=field_length,)
 arcpy.AddField_management(inFeatures, Field_Condition, "Text", field_length=field_length,)
@@ -438,8 +700,21 @@ arcpy.AddField_management(inFeatures, Field_Growing, "TEXT", field_length=field_
 arcpy.AddField_management(inFeatures, FieldMajor1, "TEXT", field_length=field_length,)
 arcpy.AddField_management(inFeatures, FieldMajor2, "TEXT", field_length=field_length,)
 arcpy.AddField_management(inFeatures, FieldMajor3, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, FieldMod1, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, FieldMod2, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, FieldMod3, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, FieldMin1, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, FieldMin2, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, FieldMin3, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, FieldPatho1, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, FieldPatho2, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, FieldPatho3, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, FieldWork1, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, FieldWork2, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, FieldWork3, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, Field_Notes, "TEXT", field_length=Notes_Length,)
 
-#time.sleep(5)
+time.sleep(5)
 
 #assign domain to field 
 #arcpy.AssignDomainToField_management(inFeatures, inField, domName)
@@ -448,11 +723,23 @@ arcpy.AssignDomainToField_management(inFeatures, Field_TreeName, domTreeName)
 arcpy.AssignDomainToField_management(inFeatures, Field_Arb, domNameArb)
 arcpy.AssignDomainToField_management(inFeatures, Field_Bark, domNameBark)
 arcpy.AssignDomainToField_management(inFeatures, Field_Condition, domNameCondition)
+arcpy.AssignDomainToField_management(inFeatures, Field_Cavity, domnameCavity)
 arcpy.AssignDomainToField_management(inFeatures, Field_Mast, domNameMast)
 arcpy.AssignDomainToField_management(inFeatures, Field_Growing, domNameGrowing)
 arcpy.AssignDomainToField_management(inFeatures, FieldMajor1, domNameMajor1)
 arcpy.AssignDomainToField_management(inFeatures, FieldMajor2, domNameMajor2)
 arcpy.AssignDomainToField_management(inFeatures, FieldMajor3, domNameMajor3)
-
+arcpy.AssignDomainToField_management(inFeatures, FieldMod1, domMod1)
+arcpy.AssignDomainToField_management(inFeatures, FieldMod2, domMod2)
+arcpy.AssignDomainToField_management(inFeatures, FieldMod3, domMod3)
+arcpy.AssignDomainToField_management(inFeatures, FieldMin1, domMin1)
+arcpy.AssignDomainToField_management(inFeatures, FieldMin2, domMin2)
+arcpy.AssignDomainToField_management(inFeatures, FieldMin3, domMin3)
+arcpy.AssignDomainToField_management(inFeatures, FieldPatho1, domPatho1)
+arcpy.AssignDomainToField_management(inFeatures, FieldPatho2, domPatho2)
+arcpy.AssignDomainToField_management(inFeatures, FieldPatho3, domPatho3)
+arcpy.AssignDomainToField_management(inFeatures, FieldWork1, domWork1)
+arcpy.AssignDomainToField_management(inFeatures, FieldWork2, domWork2)
+arcpy.AssignDomainToField_management(inFeatures, FieldWork3, domWork3)
 
 arcpy.EnableAttachments_management(inFeatures)
