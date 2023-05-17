@@ -12,22 +12,30 @@ import arcpy
 import time
 
 # Set local variables
-out_folder_path = "H:/Data/Urban23" 
-out_name = "UrbanTreeInv23.gdb"
-FeatureName = "Trees"
+# out_folder_path = "H:\Data\Urban23\data"
+# out_name = "UrbanTreeInv23.gdb"
+# FeatureName = "Trees"
+out_folder_path = "H:\\data\\Urban23\\data"
+out_path = "H:\\data\\Urban23\\data"
+out_dataset_path = "H:\\data\\Urban23\\data\\UrbanTreeInv23.gdb"
+gdb = "UrbanTreeInv23.gdb"
+
+
+
+
 # Creating a spatial reference object nad 83 utm zone 17 n
 
 
 # Execute CreateFileGDB
-arcpy.CreateFileGDB_management(out_folder_path, out_name)
+arcpy.CreateFileGDB_management(out_path, gdb)
 
-time.sleep(20)
+#time.sleep(20)
 
 sr = arcpy.SpatialReference(26917)
 
 
 # Set the workspace (to avoid having to type in the full path to the data        every time)
-arcpy.env.workspace = "h:/Data/Urban23"
+arcpy.env.workspace = "h:\\Data\\Urban23\\data"
      
         
     
@@ -38,12 +46,12 @@ domCondition = "Condition"
 domGrowspace = "GrowSpace"
 domMaintenance = "Maintenance"
 domNotes = "Notes"
-gdb = "Greenspace.gdb"
-inFeatures = "UrbanTreeInv23.gdb/Trees"
-field_length = 30
+#gdb = "H:\data\Urban23\data\UrbanTreeInv23.gdb"
+inFeatures = "H:\\data\\Urban23\\data\\UrbanTreeInv23.gdb/Trees"
+field_lengtha = 30
 Field_Name_Length = 75
 Notes_Length = 75
-Field_Name = "Tree_Name"
+Field_TreeName = "Tree_Name"
 Field_DBH = "DBH"
 Field_Condition = "Condition"
 Field_GrowSpace = "GrowSpace"
@@ -177,7 +185,7 @@ domDict = {"Abies_concolor": "Abies concolor", \
                 "Rhamnus_cathartica": "Rhamnus cathartica", \
                 "Rhus_typhina": "Rhus typhina", \
                 "Robinia_pseudoacacia": "Robinia pseudoacacia", \
-                "Salix_alba_‘Tristis’": "Salix alba ‘Tristis’", \
+                "Salix_alba_Tristis": "Salix alba Tristis", \
                 "Sambucus_pubens": "Sambucus pubens", \
                 "Sassafras_albidum": "Sassafras albidum", \
                 "Sorbus_aucuparia": "Sorbus aucuparia", \
@@ -320,18 +328,18 @@ for code in domDictMaintenance:
 
 
 
-arcpy.AddField_management(inFeatures, Field_Name, "TEXT", field_length=field_length,)
-arcpy.AddField_management(inFeatures, Field_DBH, "FLOAT", field_length=field_length,)
-arcpy.AddField_management(inFeatures, Field_Condition, "TEXT", field_length=field_length,)
-arcpy.AddField_management(inFeatures, Field_GrowSpace, "TEXT", field_length=field_length,)
-arcpy.AddField_management(inFeatures, Field_Maintenance, "TEXT", field_length=field_length,)
+arcpy.AddField_management(inFeatures, Field_TreeName, "TEXT", field_length=field_lengtha,)
+arcpy.AddField_management(inFeatures, Field_DBH, "FLOAT", field_length=field_lengtha,)
+arcpy.AddField_management(inFeatures, Field_Condition, "TEXT", field_length=field_lengtha,)
+arcpy.AddField_management(inFeatures, Field_GrowSpace, "TEXT", field_length=field_lengtha,)
+arcpy.AddField_management(inFeatures, Field_Maintenance, "TEXT", field_length=field_lengtha,)
 arcpy.AddField_management(inFeatures, Field_Notes, "TEXT", field_length=Notes_Length,)
 
 #time.sleep(5)
 
 #assign domain to field 
 
-arcpy.AssignDomainToField_management(inFeatures, Field_Name, domName)
+arcpy.AssignDomainToField_management(inFeatures, Field_TreeName, domName)
 #arcpy.AssignDomainToField_management(inFeatures, Field_DBH, domDBH)
 arcpy.AssignDomainToField_management(inFeatures, Field_Condition, domCondition)
 arcpy.AssignDomainToField_management(inFeatures, Field_GrowSpace, domGrowspace)
